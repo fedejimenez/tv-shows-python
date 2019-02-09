@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block head_title %} Series | {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+
+<h1> {{ object.title }} <small> Imdb Rating: {{ object.imdb }} </small></h1>
+<p> {{ object.summary }} </p>
+
+
+{% endblock content %}

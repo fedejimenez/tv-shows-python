@@ -14,15 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from series.views import series_listview
+from series.views import (
+  series_listview,
+  TVShowListView,
+  TVShowDetailView,
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html')),
-    path('series/', series_listview),
+    path('series/', TVShowListView.as_view()),
+    # path('series/<slug:name>', TVShowListView.as_view()),
+    path('series/<slug>', TVShowDetailView.as_view()),
+    # re_path(r'^series/(?P<slug>\w+)/$', TVShowListView.as_view()),
     path('about/', TemplateView.as_view(template_name='about.html')),
     path('contact/', TemplateView.as_view(template_name='contact.html'))
 ]
