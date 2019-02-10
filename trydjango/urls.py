@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView
+
 
 from series.views import (
   series_listview,
@@ -24,9 +26,9 @@ from series.views import (
   SeriesCreateView
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', LoginView.as_view(), name='login'),
     path('', TemplateView.as_view(template_name='home.html')),
     path('series/', TVShowListView.as_view()),
     path('series/create', SeriesCreateView.as_view()),

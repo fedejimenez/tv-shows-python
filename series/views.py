@@ -1,4 +1,6 @@
 import logging, sys
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
@@ -8,12 +10,19 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from .models import TVShow
 from .forms import SeriesCreateForm, TVShowCreateForm
 
+# Function Based View
+@login_required(login_url='/login/') # Decorator: functions taht wraps another function (this ons is built-in)
 def series_createview(request):
   form = TVShowCreateForm(request.POST or None)
   errors = None
   if form.is_valid():
-    form.save()
-    return HttpResponseRedirect("/series/")
+    # if request.user.is_authenticated():
+      # instance = form.save(commit=False)
+      # instance.user = request.user
+      # instance.save()
+      return HttpResponseRedirect("/series/")
+    # else:
+      # return HttpResponseRedirect("/login/")
   if form.errors:
       errors = form.errors
   template_name = 'series/form.html'
@@ -48,7 +57,15 @@ class TVShowDetailView(DetailView):
   #   obj = get_object_or_404(TVShow, id=tvshow_id) #pk = tvshow_id
   #   return obj
 
-class SeriesCreateView(CreateView):
+
+# Class Based View
+class SeriesCreateView(LoginRequiredMixin, CreateView):
   form_class = TVShowCreateForm
+  login_url = '/login/' # It can be changed
   template_name = 'series/form.html'
-  success_URL = "/series/" 
+  success_url = "/series/" 
+
+  def form_valid(self, form):
+    instance = form.save(commit=False)
+    instance.user = self.request.user
+    return super(SeriesCreateView, self).form_valid(form)

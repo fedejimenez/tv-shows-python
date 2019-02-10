@@ -1,9 +1,13 @@
 from django.db import models
+from django.conf import settings 
 from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
 from .validators import validate_name
 
+User = settings.AUTH_USER_MODEL
+
 class TVShow(models.Model):
+    user          = models.ForeignKey(User, on_delete=models.CASCADE)
     name          = models.CharField(max_length=120, validators=[validate_name])
     imdb          = models.CharField(max_length=120, null=True, blank=True) 
     summary       = models.CharField(max_length=500, null=True, blank=True)
