@@ -21,6 +21,7 @@ from series.views import (
   series_listview,
   TVShowListView,
   TVShowDetailView,
+  SeriesCreateView
 )
 
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html')),
     path('series/', TVShowListView.as_view()),
+    path('series/create', SeriesCreateView.as_view()),
     # path('series/<slug:name>', TVShowListView.as_view()),
     path('series/<slug>', TVShowDetailView.as_view()),
     # re_path(r'^series/(?P<slug>\w+)/$', TVShowListView.as_view()),

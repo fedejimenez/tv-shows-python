@@ -1,9 +1,10 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
+from .validators import validate_name
 
 class TVShow(models.Model):
-    name          = models.CharField(max_length=120)
+    name          = models.CharField(max_length=120, validators=[validate_name])
     imdb          = models.CharField(max_length=120, null=True, blank=True) 
     summary       = models.CharField(max_length=500, null=True, blank=True)
     status        = models.CharField(max_length=500, null=True, blank=True)

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head_title %} Add a Series | {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+
+<h1>Add a Series</h1>
+
+{% if form.errors %}
+  {{ form.errors }}
+{% endif %}
+
+<form action="" method="POST"> {% csrf_token %}
+
+  {{ form.as_p }}
+
+  <button type="submit">Save</button>
+</form>
+
+{% endblock %}

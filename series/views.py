@@ -1,10 +1,24 @@
 import logging, sys
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
 from .models import TVShow
+from .forms import SeriesCreateForm, TVShowCreateForm
+
+def series_createview(request):
+  form = TVShowCreateForm(request.POST or None)
+  errors = None
+  if form.is_valid():
+    form.save()
+    return HttpResponseRedirect("/series/")
+  if form.errors:
+      errors = form.errors
+  template_name = 'series/form.html'
+  context = {"form": form, "errors": errors}
+  return render(request, template_name, context)
 
 def series_listview(request):
   template_name = 'series/series_list.html'
@@ -33,3 +47,8 @@ class TVShowDetailView(DetailView):
   #   tvshow_id = self.kwargs.get('tvshow_id')
   #   obj = get_object_or_404(TVShow, id=tvshow_id) #pk = tvshow_id
   #   return obj
+
+class SeriesCreateView(CreateView):
+  form_class = TVShowCreateForm
+  template_name = 'series/form.html'
+  success_URL = "/series/" 
