@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView
 
@@ -29,13 +29,16 @@ from series.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
-    path('', TemplateView.as_view(template_name='home.html')),
-    path('series/', TVShowListView.as_view()),
-    path('series/create', SeriesCreateView.as_view()),
-    # path('series/<slug:name>', TVShowListView.as_view()),
-    path('series/<slug>', TVShowDetailView.as_view()),
-    # re_path(r'^series/(?P<slug>\w+)/$', TVShowListView.as_view()),
-    path('about/', TemplateView.as_view(template_name='about.html')),
-    path('contact/', TemplateView.as_view(template_name='contact.html'))
+    path('logout/', LoginView.as_view(), name='logout'),
+    path('password_change/', LoginView.as_view(), name='password_change'),
+    path('password_change/done/', LoginView.as_view(), name='password_change_done'),
+    path('password_reset/', LoginView.as_view(), name='password_reset'),
+    path('password_reset/done/', LoginView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', LoginView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', LoginView.as_view(), name='password_reset_complete'),
+
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('series/', include('series.urls', namespace='series')),
+    path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
+    path('contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
 ]
-  

@@ -63,7 +63,7 @@ class SeriesCreateView(LoginRequiredMixin, CreateView):
   form_class = TVShowCreateForm
   login_url = '/login/' # It can be changed
   template_name = 'series/form.html'
-  success_url = "/series/" 
+  # success_url = "/series/" 
 
   def form_valid(self, form):
     instance = form.save(commit=False)
