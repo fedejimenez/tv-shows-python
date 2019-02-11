@@ -18,13 +18,6 @@ from django.urls import path, re_path, include
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 
-
-from series.views import (
-  SeriesListView,
-  SeriesDetailView,
-  SeriesCreateView
-)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
@@ -38,6 +31,7 @@ urlpatterns = [
 
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('series/', include('series.urls', namespace='series')),
+    path('profiles/', include('profiles.urls', namespace='profiles')),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
     path('contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
 ]

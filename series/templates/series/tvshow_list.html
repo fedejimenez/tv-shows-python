@@ -6,19 +6,36 @@
 
 <h1>Series List <small><a href="{% url 'series:create' %}">Add a Series</a></small></h1>
 
-<ul>
-{% for obj in object_list %}
-  <li>
-    <a href="{{ obj.get_absolute_url }}">
-      {{ obj.name }} {{ obj.imdb }} 
-    </a>
-  </li>
+<div class="row">
+{% for object in object_list %}
+  <div class="col-sm-4">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="https://via.placeholder.com/320" alt="Card image cap" >
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+        </h5>
+        <h6 class="card-subtitle mb-2 test-muted">
+          IMDB: {{ object.imdb }}
+        </h6>
+        <p class="card-text">
+          Summary: {{ object.summary }}
+        </p>
+        <p class="card-text">
+          Status: {{ object.status }}
+        </p>
+        <p class="card-text">
+          Genres: <span class="badge badge-default">{{ object.genres }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
 
 {% empty %}
   <li><a href="{% url 'series:create' %}">Add a Series</a></li>
 
 {% endfor %}
-</ul>
+</div>
 
 
 

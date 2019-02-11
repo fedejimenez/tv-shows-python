@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
-{% block head_title %} Series | {{ block.super }} {% endblock head_title %}
+{% block head_title %} {{ user.username }} | {{ block.super }} {% endblock head_title %}
 
 {% block content %}
-<br>
+
+<h1> {{ user.username }} </h1>
+<hr>
+
+{% if user.tvshow_set.all.exists%}
+
 <div class="row">
-  <div class="col-sm-8">
-    <div class="card" style="width: 50rem;">
-      <img class="card-img-top" src="https://via.placeholder.com/480x320" alt="Card image cap" >
+{% for object in user.tvshow_set.all %}
+  <div class="col-sm-4">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="https://via.placeholder.com/320" alt="Card image cap" >
       <div class="card-body">
         <h5 class="card-title">
-          {{ object.title }}
+          <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
         </h5>
         <h6 class="card-subtitle mb-2 test-muted">
           IMDB: {{ object.imdb }}
@@ -27,7 +33,11 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-2"></div>
+{% endfor %}
 </div>
+
+{% else %}
+<p class="lead">No Series found.</p>
+{% endif %}
 
 {% endblock content %}
