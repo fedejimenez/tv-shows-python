@@ -15,14 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 
 
 from series.views import (
-  series_listview,
-  TVShowListView,
-  TVShowDetailView,
+  SeriesListView,
+  SeriesDetailView,
   SeriesCreateView
 )
 

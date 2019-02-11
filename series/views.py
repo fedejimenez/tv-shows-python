@@ -5,67 +5,44 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 
 from .models import TVShow
 from .forms import SeriesCreateForm, TVShowCreateForm
 
-# Function Based View
-@login_required(login_url='/login/') # Decorator: functions taht wraps another function (this ons is built-in)
-def series_createview(request):
-  form = TVShowCreateForm(request.POST or None)
-  errors = None
-  if form.is_valid():
-    # if request.user.is_authenticated():
-      # instance = form.save(commit=False)
-      # instance.user = request.user
-      # instance.save()
-      return HttpResponseRedirect("/series/")
-    # else:
-      # return HttpResponseRedirect("/login/")
-  if form.errors:
-      errors = form.errors
-  template_name = 'series/form.html'
-  context = {"form": form, "errors": errors}
-  return render(request, template_name, context)
-
-def series_listview(request):
-  template_name = 'series/series_list.html'
-  queryset = TVShow.objects.all()
-  context = {
-      "object_list": queryset
-  }
-  return render(request, template_name, context)
-
-class TVShowListView(ListView):
+class SeriesListView(LoginRequiredMixin, ListView):
   def get_queryset(self):
-      slug = self.kwargs.get('name')
-      if slug: 
-        queryset = TVShow.objects.filter(
-          Q(name__iexact=slug) |
-          Q(name__icontains=slug) 
-        )
-      else:
-        queryset = TVShow.objects.all()
-      return queryset
+    return TVShow.objects.filter(user=self.request.user)
 
-class TVShowDetailView(DetailView):
-  queryset = TVShow.objects.all()
+class SeriesDetailView(LoginRequiredMixin, DetailView):
+  def get_queryset(self):
+    return TVShow.objects.filter(user=self.request.user)
 
-  # def get_object(self, *args, **kwargs):
-  #   tvshow_id = self.kwargs.get('tvshow_id')
-  #   obj = get_object_or_404(TVShow, id=tvshow_id) #pk = tvshow_id
-  #   return obj
-
-
-# Class Based View
 class SeriesCreateView(LoginRequiredMixin, CreateView):
   form_class = TVShowCreateForm
   login_url = '/login/' # It can be changed
-  template_name = 'series/form.html'
-  # success_url = "/series/" 
+  template_name = 'form.html'
 
   def form_valid(self, form):
     instance = form.save(commit=False)
     instance.user = self.request.user
     return super(SeriesCreateView, self).form_valid(form)
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(SeriesCreateView, self).get_context_data(*args, **kwargs)
+    context['title'] = 'Add a Series'
+    return context
+
+class SeriesUpdateView(LoginRequiredMixin, UpdateView):
+  form_class = TVShowCreateForm
+  login_url = '/login/' # It can be changed
+  template_name = 'form.html'
+
+  def get_context_data(self, *args, **kwargs):
+    context = super(SeriesUpdateView, self).get_context_data(*args, **kwargs)
+    name = self.get_object().name  
+    context['title'] = f'Update {name}'
+    return context
+
+  def get_queryset(self):
+    return TVShow.objects.filter(user=self.request.user)
