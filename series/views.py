@@ -10,6 +10,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from .models import TVShow
 from .forms import SeriesCreateForm, TVShowCreateForm
 
+
 class SeriesListView(LoginRequiredMixin, ListView):
   def get_queryset(self):
     return TVShow.objects.filter(user=self.request.user)

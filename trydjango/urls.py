@@ -15,12 +15,14 @@ Including another URLconf
 """
 
 from django.conf import settings
+from django.conf.urls import url, include
 
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,13 +35,21 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', LoginView.as_view(), name='password_reset_confirm'),
     path('reset/done/', LoginView.as_view(), name='password_reset_complete'),
 
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    # path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', views.home, name='home'),
     path('series/', include('series.urls', namespace='series')),
     path('profiles/', include('profiles.urls', namespace='profiles')),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
     path('contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
+
+
 ]
 
-# check im in development
+# check in in development
 if settings.DEBUG:
   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+  # debug toolbar
+  import debug_toolbar
+  urlpatterns = [
+      path('__debug__/', include(debug_toolbar.urls)),
+  ] + urlpatterns

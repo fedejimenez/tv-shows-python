@@ -2,6 +2,9 @@ from django import forms
 from .models import TVShow 
 from .validators import validate_name
 
+from django.conf import settings
+import requests
+
 class SeriesCreateForm(forms.Form):
   name        = forms.CharField()
   summary     = forms.CharField(required=False)

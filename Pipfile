@@ -12,6 +12,9 @@ gunicorn = "*"
 dj-database-url = "*"
 django-crispy-forms = "*"
 pillow = "*"
+django-debug-toolbar = "*"
+requests = "*"
+python-decouple = "*"
 
 [requires]
 python_version = "3.6"
