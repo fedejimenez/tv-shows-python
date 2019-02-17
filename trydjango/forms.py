@@ -3,7 +3,15 @@ from django.conf import settings
 import requests
 
 class DictionaryForm(forms.Form):
-    name = forms.CharField(max_length=100)
+    name = forms.CharField(label='', 
+                           max_length=100, 
+                           widget=forms.TextInput(attrs={
+                                                          'placeholder': 'Search for your favourite TV Show!',
+                                                          'class': 'form-control mr-sm-4 input-large text-center',
+                                                          'id': 'input-search'
+                                                          }
+                                                  )
+                           )
 
     def search(self):
         result = {}

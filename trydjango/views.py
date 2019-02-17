@@ -10,7 +10,7 @@ def home(request):
       form = DictionaryForm(request.GET)
       if form.is_valid():
           search_result = form.search()
+      print(search_result['id'])
   else:
       form = DictionaryForm()
-  print(search_result)
   return render(request, 'home.html', {'form': form, 'search_result': search_result})

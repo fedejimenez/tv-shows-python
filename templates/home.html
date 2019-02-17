@@ -1,242 +1,211 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Search for a Series</h2>
 
-  <form method="get">
-    {{ form.as_p }}
-    <button type="submit">search</button>
-  </form>
-
-  {% if search_result %}
-    <hr>
-    {% if search_result.success %}
-      {% for key, value in search_result.items %}
-        <h3>{{ key }} : {{ value }}</h3>
-      {% endfor %}
-    {% else %}
-      <p><em>{{ search_result.message }}</em></p>
-    {% endif %}
-  {% endif %}
-  
-  <!-- Card -->
-<div class="card-wrapper col-md-4 hoverable">
-  <div id="card-1" class="card text-center ">
-
-    <!-- Image-->
-    <div class="card-up">
-      <img class="card-img-top" src="{{ search_result.image.original }}" alt="Image with a photo of clouds.">
-    </div>
-
-    <!-- Avatar -->
-    <div class="avatar mx-auto white"><img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" class="rounded-circle"
-        alt="Sample avatar image.">
-    </div>
-
-    <!-- Content -->
-    <div class="card-body">
-      <h4 class="font-weight-bold mb-3">{{ search_result.name }}</h4>
-      <p class="font-weight-bold blue-text">Rating: {{ search_result.rating.average }}</p>
-      <p>
-        {{ search_result.summary | safe }}
-      </p>
-    </div>
-    <a class="rotate-btn font-weight-bold blue-text" data-card="card-1"><i class="fas fa-reply-all"></i> More Info</a>
-    <hr>
-    <!-- Social Icons -->
-    <ul class="list-inline py-2">
-      <li class="list-inline-item"><a class="p-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></li>
-      <li class="list-inline-item"><a class="p-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a></li>
-      <li class="list-inline-item"><a class="p-2 fa-lg gplus-ic"><i class="fab fa-google-plus-g"></i></a></li>
-      <li class="list-inline-item"><a class="p-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a></li>
-    </ul>
-
-  </div>
-</div>
-<!-- Card -->
-
-<!-- Section-->
-<section class="my-5">
-
-  <!-- Section heading -->
-  <h2 class="h1-responsive font-weight-bold text-center my-5">Results</h2>
-  <!-- Section description -->
-  <p class="text-center w-responsive mx-auto mb-5"></p>
-
-  <!-- Grid row -->
-  <div class="row">
-    <!-- Grid column -->
-    <div class="col-lg-1">
-    </div>
-    <div class="col-lg-3">
-      <!-- Featured image -->
-      <div class="view overlay rounded mb-2">
-        <img class="img-fluid" src="{{ search_result.image.medium }}" alt="Sample image">
-        <a data-toggle="modal" data-target="#modalQuickView">
-          <div class="mask rgba-white-slight"></div>
-        </a>
+{% if search_result.length == 0 %}
+  <h4> Most popular TV Shows </h4>
+   <ul class="list-group" id="searchResult">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
+   </ul>
+{% else %}
+  <div class="d-none text-center" id="spinner-search" role="status">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <!-- Grid column -->
-
-    <!-- Grid column -->
-    <div class="col-lg-7">
-    <div class="col-lg-1">
+    <div class="spinner-grow text-secondary" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-
-      <!-- Category -->
-      <h6 class="font-weight-bold blue-text"><i class="fas fa-star pr-1"></i> 
-          {{ search_result.rating.average }}
-          
-          {% for genre in search_result.genres %}
-            <p class="badge badge-primary ml-2">
-              {{ genre }}  
-            </p>
-          {% endfor%}
-      </h6>
-      <!-- Post title -->
-      <h4 class="font-weight-bold mb-3">{{ search_result.name }}</h4>
-      <!-- Data -->
-      <p class="text-justify"> {{ search_result.summary | safe }}</p>
-
-      <!-- Read more button -->
-      <a class="btn btn-danger btn-md" data-toggle="modal" data-target="#modalQuickView" onclick='get_more_info( {{search_result.id }})'>More Info</a>
-      <button class="btn btn-primary btn-md">Add to my list
-        <i class="fas fa-plus ml-2" aria-hidden="true"></i>
-      </button>
-
+    <div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <!-- Grid column -->
+    <!-- <span class="pb-4" align="center" >Doing science...</span> -->
   </div>
-  <!-- Grid row -->
+  <ul class="list-group" id="search-result">
+  </ul>
+  <!-- Section-->
+  <section class="my-4 mb-4" id="section-search">
+    <!-- Section heading -->
+    <h3 class="h1-responsive font-weight-bold text-center my-5">Most Popular</h3>
+    <!-- Section description -->
+    <p class="text-center w-responsive mx-auto mb-5"></p>
 
-</section>
-<!-- Section-->
+    <!-- Grid row -->
+    <div class="row">
+      <!-- Grid column -->
+      <div class="col-lg-1">
+      </div>
+      <div class="col-lg-3">
+        <!-- Featured image -->
+        <div class="view overlay rounded mb-2">
+          <img class="img-fluid" src="{{ search_result.image.medium }}" alt="Sample image">
+          <a data-toggle="modal" data-target="#modalQuickView">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+      </div>
+      <!-- Grid column -->
 
-<!-- Modal: modalQuickView -->
-<div class="modal fade" id="modalQuickView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-5">
-            <!--Image -->
-            <div class="view overlay rounded mb-2">
-              <img class="img-fluid" src="{{ search_result.image.original }}" alt="Sample image">
-              <a>
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div>
-              <p class="font-weight-bold"> <i class="fas fa-hourglass pr-1"></i> 
-                {{ search_result.status }}
-              </p> 
-              <p class="font-weight-bold"> <i class="fas fa-clock pr-1"></i> 
-                {{ search_result.runtime }} min.
+      <!-- Grid column -->
+      <div class="col-lg-7">
+      <div class="col-lg-1">
+      </div>
+
+        <!-- Category -->
+        <h6 class="font-weight-bold blue-text"><i class="fas fa-star pr-1"></i> 
+            {{ search_result.rating.average }}
+            
+            {% for genre in search_result.genres %}
+              <p class="badge badge-primary ml-2">
+                {{ genre }}  
               </p>
-              <p class="font-weight-bold"> <i class="fas fa-calendar pr-1"></i> 
-                {% for day in search_result.schedule.days %}
-                    {{ day }}  
-                {% endfor%}
-                
-                {{ search_result.schedule.time }}
-              </p>
-              <p class="font-weight-bold"> <i class="fas fa-language pr-1"></i> 
-                {{ search_result.language }}
-              </p>
-              {% if search_result.webChannel.name %} 
-                <p class="font-weight-bold"> <i class="fas fa-tv pr-1"></i>
-                  {{ search_result.webChannel.name }}
+            {% endfor%}
+        </h6>
+        <!-- Post title -->
+        <h4 class="font-weight-bold mb-3">{{ search_result.name }}</h4>
+        <!-- Data -->
+        <p class="text-justify"> {{ search_result.summary | safe }}</p>
+
+        <!-- Read more button -->
+        <a class="btn btn-danger btn-md" data-toggle="modal" data-target="#modalQuickView" onclick='get_more_info( {{search_result.id }})'>More Info</a>
+        <button class="btn btn-primary btn-md">Add to my list
+          <i class="fas fa-plus ml-2" aria-hidden="true"></i>
+        </button>
+
+      </div>
+      <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+
+  </section><br><br>
+  <!-- Section-->
+
+  <!-- Modal: modalQuickView -->
+  <div class="modal fade" id="modalQuickView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-5">
+              <!--Image -->
+              <div class="view overlay rounded mb-2">
+                <img class="img-fluid" src="{{ search_result.image.original }}" alt="Sample image">
+                <a>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+                <p class="font-weight-bold"> <i class="fas fa-hourglass pr-1"></i> 
+                  {{ search_result.status }}
+                </p> 
+                <p class="font-weight-bold"> <i class="fas fa-clock pr-1"></i> 
+                  {{ search_result.runtime }} min.
                 </p>
-              {% endif %}
-              <p class="font-weight-bold" id="next-episode"> 
-              </p>
-          </div>
-          <div class="col-lg-7">
-            <h2 class="h2-responsive product-name">
-              <strong>{{ search_result.name }}</strong>
-            </h2>
-            <!-- Category -->
-            <h6 class="font-weight-bold blue-text"><i class="fas fa-star pr-1"></i> 
-                {{ search_result.rating.average }}
-                
-                {% for genre in search_result.genres %}
-                  <p class="badge badge-primary ml-2">
-                    {{ genre }}  
+                <p class="font-weight-bold"> <i class="fas fa-calendar pr-1"></i> 
+                  {% for day in search_result.schedule.days %}
+                      {{ day }}  
+                  {% endfor%}
+                  
+                  {{ search_result.schedule.time }}
+                </p>
+                <p class="font-weight-bold"> <i class="fas fa-language pr-1"></i> 
+                  {{ search_result.language }}
+                </p>
+                {% if search_result.webChannel.name %} 
+                  <p class="font-weight-bold"> <i class="fas fa-tv pr-1"></i>
+                    {{ search_result.webChannel.name }}
                   </p>
-                {% endfor%}
-            </h6>
-            <!--Accordion wrapper-->
-            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-              <!-- Accordion card -->
-              <div class="card">
-
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingOne1">
-                  <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
-                    aria-controls="collapseOne1">
-                    <h5 class="mb-0">
-                      Summary <i class="fas fa-angle-down rotate-icon"></i>
-                    </h5>
-                  </a>
-                </div>
-
-                <!-- Card body -->
-                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
-                  data-parent="#accordionEx">
-                  <div class="card-body">
-                    <p class="text-justify"> {{ search_result.summary | safe }}</p>
-                  </div>
-                </div>
-
-              </div>
-              <!-- Accordion card -->
-
-              <!-- Accordion card -->
-              <div class="card">
-
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingTwo2">
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-                    aria-expanded="false" aria-controls="collapseTwo2">
-                    <h5 class="mb-0">
-                      Main Cast <i class="fas fa-angle-down rotate-icon"></i>
-                    </h5>
-                  </a>
-                </div>
-
-                <!-- Card body -->
-                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-                  data-parent="#accordionEx">
-                  <div class="card-body">
-                    <p id="cast"></p>
-                  </div>
-                </div>
-
-              </div>
-              <!-- Accordion card -->
+                {% endif %}
+                <p class="font-weight-bold" id="next-episode"> 
+                </p>
             </div>
-            <!-- Accordion wrapper -->
+            <div class="col-lg-7">
+              <h2 class="h2-responsive product-name">
+                <strong>{{ search_result.name }}</strong>
+              </h2>
+              <!-- Category -->
+              <h6 class="font-weight-bold blue-text"><i class="fas fa-star pr-1"></i> 
+                  {{ search_result.rating.average }}
+                  
+                  {% for genre in search_result.genres %}
+                    <p class="badge badge-primary ml-2">
+                      {{ genre }}  
+                    </p>
+                  {% endfor%}
+              </h6>
+              <!--Accordion wrapper-->
+              <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
-            <!-- Add to my List -->
-            <div class="card-body">
-              <div class="text-center">
+                <!-- Accordion card -->
+                <div class="card">
 
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary">Add to my list
-                  <i class="fas fa-plus ml-2" aria-hidden="true"></i>
-                </button>
+                  <!-- Card header -->
+                  <div class="card-header" role="tab" id="headingOne1">
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                      aria-controls="collapseOne1">
+                      <h5 class="mb-0">
+                        Summary <i class="fas fa-angle-down rotate-icon"></i>
+                      </h5>
+                    </a>
+                  </div>
+
+                  <!-- Card body -->
+                  <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                    data-parent="#accordionEx">
+                    <div class="card-body">
+                      <p class="text-justify"> {{ search_result.summary | safe }}</p>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- Accordion card -->
+
+                <!-- Accordion card -->
+                <div class="card">
+
+                  <!-- Card header -->
+                  <div class="card-header" role="tab" id="headingTwo2">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                      aria-expanded="false" aria-controls="collapseTwo2">
+                      <h5 class="mb-0">
+                        Main Cast <i class="fas fa-angle-down rotate-icon"></i>
+                      </h5>
+                    </a>
+                  </div>
+
+                  <!-- Card body -->
+                  <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                    data-parent="#accordionEx">
+                    <div class="card-body">
+                      <p id="cast"></p>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- Accordion card -->
               </div>
+              <!-- Accordion wrapper -->
+
+              <!-- Add to my List -->
+              <div class="card-body">
+                <div class="text-center">
+
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <button class="btn btn-primary">Add to my list
+                    <i class="fas fa-plus ml-2" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.Add to Cart -->
             </div>
-            <!-- /.Add to Cart -->
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
+{% endif %}
 
 
 {% endblock content %}
