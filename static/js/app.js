@@ -81,7 +81,9 @@ $(document).ready(function(){
                   for( let i = 0; i<len; i++){
                     let name = response[i]['show']['name'];
                     let rating = response[i]['show']['rating']['average'];
-                    let img ='https://via.placeholder.com/150' ; 
+                    let img ='http://placehold.jp/24/cccccc/ffffff/150x150.png?text=No%20image%20avaiable' ; 
+                    let genres = response[i]['show']['genres'];
+                    let status = response[i]['show']['status'];
                     if (response[i]['show']['image'] != null) {
                       img = response[i]['show']['image']['medium'];
                     }
@@ -89,12 +91,36 @@ $(document).ready(function(){
                     if (rating == null){
                       rating = "";
                     } 
-                    $("#search-result").append("<a href='http://localhost:8000/?name="
-                                                +name.toLowerCase()
-                                                +"'> <li class='list-group-item d-flex justify-content-between align-items-center'>"
-                                                +"<img src="+img+">"+name
-                                                +"<span class='badge badge-primary badge-pill'>"+ rating +"</span>"
-                                                +"</li></a>");
+                    $("#search-result").append(""
+                                                + " <div class='col-sm-4 mb-2'>"
+                                                + "   <div class='card card-cascade'>"
+                                                + "      <div class='view overlay'>"
+                                                + "        <a href='http://localhost:8000/?name="+name+"'>"
+                                                + "          <img class='card-img-top img-fluid' src='"+ img +"' alt='Card image cap' >"
+                                                + "            <div class='mask flex-center rgba-blue-strong'>"
+                                                + "              <h1 class='white-text text-justify'><strong>"+rating+" / 10 </strong></h1>"
+                                                + "            </div>"
+                                                + "        </a>"
+                                                + "      </div>"
+                                                + "      <a href='http://localhost:8000/?name="+name+"'>"
+                                                + "         <div class='card-body card-body-cascade'>"
+                                                + "           <h3 class='card-title text-center black-text'>"
+                                                + "             <strong>"+ name 
+                                                + "             </strong>"
+                                                + "           </h3>"
+                                                + "           <p class='card-text text-center'>"
+                                                + "             <span class='mr-3'><i class='fas fa-hourglass pr-1'></i>"
+                                                + "               <strong>"
+                                                +                   status 
+                                                + "               </strong>"
+                                                + "             <span>"
+                                                + "             <span class='badge badge-default ml-3'>"+ genres +"</span>"
+                                                + "           </p>"
+                                                + "         </div>"
+                                                + "      </a>"
+                                                + "   </div>"
+                                                + " </div>"
+                                              );
 
                   }
                 }
@@ -106,3 +132,11 @@ $(document).ready(function(){
         }
     });
 });
+
+
+function change_random(){
+  console.log('in');
+  let random = Math.floor((Math.random() * 41014) + 1);
+  let input_field = document.getElementById("input-random");
+  input_field.setAttribute("value", random.toString());
+}

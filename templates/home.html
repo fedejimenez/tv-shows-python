@@ -22,12 +22,18 @@
     </div>
     <!-- <span class="pb-4" align="center" >Doing science...</span> -->
   </div>
-  <ul class="list-group" id="search-result">
-  </ul>
+
+  <!-- Autocomplete results -->
+  <div class="row" id="search-result">
+  </div><br>
   <!-- Section-->
   <section class="my-4 mb-4" id="section-search">
     <!-- Section heading -->
-    <h3 class="h1-responsive font-weight-bold text-center my-5">Most Popular</h3>
+    
+    <form action="#" method="get" class="text-center">
+      <input type="text" id="input-random" value="8" name="id" size="1" hidden/>
+      <input type="submit" id="input-button" class="btn btn-info btn-md" value="Discover a new show!" onclick="change_random()" name="btn-random">
+    </form>
     <!-- Section description -->
     <p class="text-center w-responsive mx-auto mb-5"></p>
 
@@ -39,7 +45,11 @@
       <div class="col-lg-3">
         <!-- Featured image -->
         <div class="view overlay rounded mb-2">
-          <img class="img-fluid" src="{{ search_result.image.medium }}" alt="Sample image">
+          {% if search_result.image is None %}
+            <img class="img-fluid" src="http://placehold.jp/24/cccccc/ffffff/150x150.png?text=No%20image%20avaiable" alt="Sample image">
+          {% else %}  
+            <img class="img-fluid" src="{{ search_result.image.medium }}" alt="Sample image">
+          {% endif %}  
           <a data-toggle="modal" data-target="#modalQuickView">
             <div class="mask rgba-white-slight"></div>
           </a>

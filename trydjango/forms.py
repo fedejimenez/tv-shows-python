@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 import requests
+import random
 
 class DictionaryForm(forms.Form):
     name = forms.CharField(label='', 
@@ -15,10 +16,17 @@ class DictionaryForm(forms.Form):
 
     def search(self):
         result = {}
-        name = self.cleaned_data['name']
-        endpoint = 'http://api.tvmaze.com/singlesearch/shows?q={name_id}'
+        if type(self) is str:
+          name = random.randint(1,41014)
+          endpoint = 'http://api.tvmaze.com/shows/{name_id}'
+        else:
+          name = self.cleaned_data['name']
+          endpoint = 'http://api.tvmaze.com/singlesearch/shows?q={name_id}'
+
         url = endpoint.format(source_lang='en', name_id=name)
+        print(url)
         response = requests.get(url)
+        print(response)
         if response.status_code == 200:  # SUCCESS
             result = response.json()
             result['success'] = True
