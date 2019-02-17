@@ -6,9 +6,10 @@ from django.conf import settings
 import requests
 
 class SeriesCreateForm(forms.Form):
-  name        = forms.CharField()
-  summary     = forms.CharField(required=False)
-  imdb        = forms.CharField(required=False)
+  name          = forms.CharField()
+  summary       = forms.CharField(required=False)
+  rating        = forms.CharField(required=False)
+  status        = forms.CharField(required=False)
 
   def clean_name(self):
     name = self.cleaned_data.get('name')
@@ -22,7 +23,8 @@ class TVShowCreateForm(forms.ModelForm):
     fields = [
       'name', 
       'summary', 
-      'imdb' 
+      'rating', 
+      'status'
     ]    
 
   def clean_name(self):

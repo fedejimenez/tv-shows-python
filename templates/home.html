@@ -78,10 +78,18 @@
         <p class="text-justify"> {{ search_result.summary | safe }}</p>
 
         <!-- Read more button -->
-        <a class="btn btn-danger btn-md" data-toggle="modal" data-target="#modalQuickView" onclick='get_more_info( {{search_result.id }})'>More Info</a>
-        <button class="btn btn-primary btn-md">Add to my list
-          <i class="fas fa-plus ml-2" aria-hidden="true"></i>
-        </button>
+        <div class="row">
+          <a class="btn btn-danger btn-md" data-toggle="modal" data-target="#modalQuickView" onclick="get_more_info({{search_result.id }})">More Info</a>
+          <form action="series/create", method="post"> {% csrf_token %}
+            <input type="text" class="hidden d-none" name="name", value="{{ search_result.name }}">
+            <input type="text" class="hidden d-none" name="imdb", value="{{ search_result.rating.average }}">
+            <input type="text" class="hidden d-none" name="summary", value="{{ search_result.summary | safe }}">
+            <input type="text" class="hidden d-none" name="status", value="{{ search_result.status }}">
+            <button type="submit" class="btn btn-primary btn-md">Add to my list
+              <i class="fas fa-plus ml-2" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
 
       </div>
       <!-- Grid column -->
@@ -122,9 +130,9 @@
                 <p class="font-weight-bold"> <i class="fas fa-language pr-1"></i> 
                   {{ search_result.language }}
                 </p>
-                {% if search_result.webChannel.name %} 
+                {% if search_result.network.name %} 
                   <p class="font-weight-bold"> <i class="fas fa-tv pr-1"></i>
-                    {{ search_result.webChannel.name }}
+                    {{ search_result.network.name }}
                   </p>
                 {% endif %}
                 <p class="font-weight-bold" id="next-episode"> 
