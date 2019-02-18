@@ -83,6 +83,13 @@ $(document).ready(function(){
                     let rating = response[i]['show']['rating']['average'];
                     let img ='http://placehold.jp/24/cccccc/ffffff/150x150.png?text=No%20image%20avaiable' ; 
                     let genres = response[i]['show']['genres'];
+                    let array_genres = [];
+                    for (var j = genres.length - 1; j >= 0; j--) {
+                      array_genres.push(" <span class='badge badge-primary ml-2'>"
+                             +       genres[j]
+                             +  "</span>")
+                    }
+
                     let status = response[i]['show']['status'];
                     if (response[i]['show']['image'] != null) {
                       img = response[i]['show']['image']['medium'];
@@ -114,7 +121,7 @@ $(document).ready(function(){
                                                 +                   status 
                                                 + "               </strong>"
                                                 + "             <span>"
-                                                + "             <span class='badge badge-default ml-3'>"+ genres +"</span>"
+                                                +               array_genres.join(' ')
                                                 + "           </p>"
                                                 + "         </div>"
                                                 + "      </a>"

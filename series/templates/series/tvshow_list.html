@@ -33,7 +33,7 @@
               <span>
                 {% if object.genre_set %}
                   {% for genre in object.genre_set.all %}
-                <span class='badge badge-info ml-3'>{{ genre }}</span>
+                <span class='badge badge-primary ml-2'>{{ genre }}</span>
                   {% endfor %}
                 {% endif %}
             </p>
