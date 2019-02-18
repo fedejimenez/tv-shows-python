@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'series',
     'profiles',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

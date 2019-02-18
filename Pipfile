@@ -15,6 +15,9 @@ pillow = "*"
 django-debug-toolbar = "*"
 requests = "*"
 python-decouple = "*"
+django-extensions = "*"
+pygraphviz = "*"
+pydotplus = "*"
 
 [requires]
 python_version = "3.6"

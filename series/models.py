@@ -8,12 +8,13 @@ from .validators import validate_name
 
 User = settings.AUTH_USER_MODEL
 
+
 class TVShow(models.Model):
     user          = models.ForeignKey(User, on_delete=models.CASCADE)
     name          = models.CharField(max_length=200, validators=[validate_name])
     show_id       = models.CharField(max_length=200, null=True, blank=True)
     language      = models.CharField(max_length=200, null=True, blank=True)
-    genres        = models.CharField(max_length=200, null=True, blank=True)
+    # genres        = models.ForeignKey(Genre, on_delete=models.CASCADE)
     status        = models.CharField(max_length=200, null=True, blank=True)
     runtime       = models.CharField(max_length=150, null=True, blank=True) 
     premiered     = models.CharField(max_length=150, null=True, blank=True) 
@@ -40,6 +41,8 @@ class TVShow(models.Model):
 def tvshow_pre_save_receiver(sender, instance, *args, **kwargs):
   print('saving..')
   print(instance.created_at)
+  print(instance)
+  # Genre.objects.create(tvshow = instance)
   if not instance.slug:
     instance.slug = unique_slug_generator(instance)
 
@@ -55,3 +58,11 @@ pre_save.connect(tvshow_pre_save_receiver, sender=TVShow)
 
 # post_save.connect(tvshow_post_save_receiver, sender=TVShow)
 
+class Genre(models.Model):
+  tvshow        = models.ManyToManyField(TVShow)
+  genre         = models.CharField(max_length=100, null=True, blank=True)
+  created_at    = models.DateTimeField(auto_now_add=True)
+  updated_at    = models.DateTimeField(auto_now=True)
+
+  def __str__(self):
+    return self.genre

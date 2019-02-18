@@ -135,7 +135,6 @@ $(document).ready(function(){
 
 
 function change_random(){
-  console.log('in');
   let random = Math.floor((Math.random() * 41014) + 1);
   let input_field = document.getElementById("input-random");
   input_field.setAttribute("value", random.toString());

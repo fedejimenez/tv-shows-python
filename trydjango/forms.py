@@ -24,7 +24,6 @@ class DictionaryForm(forms.Form):
           endpoint = 'http://api.tvmaze.com/singlesearch/shows?q={name_id}'
 
         url = endpoint.format(source_lang='en', name_id=name)
-        print(url)
         response = requests.get(url)
         print(response)
         if response.status_code == 200:  # SUCCESS

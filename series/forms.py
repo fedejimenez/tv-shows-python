@@ -8,7 +8,7 @@ import requests
 class SeriesCreateForm(forms.Form):
   name          = forms.CharField()
   language      = forms.CharField(required=False)
-  genres        = forms.CharField(required=False)
+  # genres        = forms.CharField(required=False)
   status        = forms.CharField(required=False)
   runtime       = forms.CharField(required=False) 
   show_id       = forms.CharField(required=False)
@@ -27,17 +27,13 @@ class SeriesCreateForm(forms.Form):
        raise form.ValidationError("Name must be complete")
     return name
 
-  def clean_genres(self):
-    genres = self.cleaned_data.get('genres')
-    return genres
-
 class TVShowCreateForm(forms.ModelForm):
   class Meta:
     model = TVShow
     fields = [
       'name',          
       'language',      
-      'genres',        
+      # 'genres',        
       'status',        
       'runtime',        
       'show_id',       
@@ -56,7 +52,3 @@ class TVShowCreateForm(forms.ModelForm):
     if name == "":
        raise form.ValidationError("Name must be complete")
     return name
-
-  def clean_genres(self):
-    genres = self.cleaned_data.get('genres')
-    return genres
