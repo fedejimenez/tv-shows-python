@@ -21,8 +21,6 @@ class TVShow(models.Model):
     rating        = models.CharField(max_length=150, null=True, blank=True) 
     network       = models.CharField(max_length=150, null=True, blank=True)
     country       = models.CharField(max_length=150, null=True, blank=True)
-    premiered     = models.CharField(max_length=500, null=True, blank=True)
-    scheduled     = models.CharField(max_length=500, null=True, blank=True)
     image         = models.CharField(max_length=500, null=True, blank=True)
     summary       = models.CharField(max_length=1000, null=True, blank=True)
     nextepisode   = models.CharField(max_length=500, null=True, blank=True)

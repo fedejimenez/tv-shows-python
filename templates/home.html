@@ -70,7 +70,7 @@
               <p class="badge badge-primary ml-2">
                 {{ genre }}  
               </p>
-            {% endfor%}
+            {% endfor %}
         </h6>
         <!-- Post title -->
         <h4 class="font-weight-bold mb-3">{{ search_result.name }}</h4>
@@ -82,9 +82,19 @@
           <a class="btn btn-danger btn-md" data-toggle="modal" data-target="#modalQuickView" onclick="get_more_info({{search_result.id }})">More Info</a>
           <form action="series/create", method="post"> {% csrf_token %}
             <input type="text" class="hidden d-none" name="name", value="{{ search_result.name }}">
-            <input type="text" class="hidden d-none" name="imdb", value="{{ search_result.rating.average }}">
-            <input type="text" class="hidden d-none" name="summary", value="{{ search_result.summary | safe }}">
+            <input type="text" class="hidden d-none" name="show_id", value="{{ search_result.id }}">
+            <input type="text" class="hidden d-none" name="language", value="{{ search_result.language }}">
+            <input type="text" class="hidden d-none" name="genres", value="{{ search_result.genres }}">
             <input type="text" class="hidden d-none" name="status", value="{{ search_result.status }}">
+            <input type="text" class="hidden d-none" name="runtime", value="{{ search_result.runtime }}">
+            <input type="text" class="hidden d-none" name="premiered", value="{{ search_result.premiered }}">
+            <input type="text" class="hidden d-none" name="scheduled", value="{{ search_result.schedule }}">
+            <input type="text" class="hidden d-none" name="rating", value="{{ search_result.rating.average }}">
+            <input type="text" class="hidden d-none" name="network", value="{{ search_result.network.name }}">
+            <input type="text" class="hidden d-none" name="country", value="{{ search_result.country.name }}">
+            <input type="text" class="hidden d-none" name="image", value="{{ search_result.image.medium }}">
+            <input type="text" class="hidden d-none" name="summary", value="{{ search_result.summary | safe }}">
+            <!-- <input type="text" class="hidden d-none" name="nextepisode", value="{{ search_result }}"> -->
             <button type="submit" class="btn btn-primary btn-md">Add to my list
               <i class="fas fa-plus ml-2" aria-hidden="true"></i>
             </button>
