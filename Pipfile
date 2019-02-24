@@ -18,6 +18,7 @@ python-decouple = "*"
 django-extensions = "*"
 pygraphviz = "*"
 pydotplus = "*"
+whitenoise = "==3.2.1"
 
 [requires]
 python_version = "3.6"
