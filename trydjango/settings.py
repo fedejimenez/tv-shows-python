@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#0t@6-l3l3cijg4^@n74v0$dzf$!o*$@ima5&*!6-f%dxe98$h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://tvshowspython.herokuapp.com', 'https://git.heroku.com/tvshowspython.git']
 
