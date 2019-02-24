@@ -26,7 +26,7 @@ SECRET_KEY = 'y)uai!&9^r9vp=*9zkc!_zgs8+wax=$@$55!=02w6x1@d=8y6v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://tvshowspython.herokuapp.com', 'https://git.heroku.com/tvshowspython.git']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tvshowspython.herokuapp.com']
 
 
 # Application definition
