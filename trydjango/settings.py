@@ -149,3 +149,7 @@ DEBUG_TOOLBAR_CONFIG = {
   'INTERCEPT_REDIRECT': False, 
   'SHOW_TOOLBAR_CALLBACK': show_toolbar
 }
+
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)

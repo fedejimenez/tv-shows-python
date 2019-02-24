@@ -161,6 +161,11 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+
+
 # API KEYS
 # OXFORD_APP_ID = config('OXFORD_APP_ID', default='')
 # OXFORD_APP_KEY = config('OXFORD_APP_KEY', default='')
