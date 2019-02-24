@@ -6,7 +6,7 @@
   <title> {% block head_title %} Django Playground {% endblock head_title %}</title>
   {% include 'snippets/css.html' %}
   <!-- Custom styles -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static_in_env 'css/style.css' %}">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
   {% include 'snippets/footer.html' %}
   {% include 'snippets/js.html' %}
 
-  <script type="text/javascript" src="{% static 'js/app.js' %}"> </script>
+  <script type="text/javascript" src="{% static_in_env 'js/app.js' %}"> </script>
 
 </body>
 </html>
