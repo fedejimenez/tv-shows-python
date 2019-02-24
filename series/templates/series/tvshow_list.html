@@ -13,10 +13,14 @@
     <div class='card card-cascade'>
        <div class='view overlay'>
          <a href='http://localhost:8000/?name={{ object.name}}'>
-           <img class='card-img-top img-fluid' src='{{ object.image }}' alt='Card image cap' >
-             <div class='mask flex-center rgba-blue-strong'>
-               <h1 class='white-text text-justify'><strong>{{ object.rating }} / 10 </strong></h1>
-             </div>
+          {% if object.image is None %}
+            <img class="card-img-top img-fluid" src="http://placehold.jp/24/cccccc/ffffff/150x150.png?text=No%20image%20avaiable" alt="show image">
+          {% else %}  
+            <img class="card-img-top img-fluid" src="{{ object.image }}" alt="Sample image">
+          {% endif %}  
+           <div class='mask flex-center rgba-blue-strong'>
+             <h1 class='white-text text-justify'><strong>{{ object.rating }} / 10 </strong></h1>
+           </div>
          </a>
        </div>
        <a href='http://localhost:8000/?name={{ object.name }}'>

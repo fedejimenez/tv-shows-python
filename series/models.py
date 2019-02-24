@@ -40,18 +40,19 @@ class TVShow(models.Model):
 
 def tvshow_pre_save_receiver(sender, instance, *args, **kwargs):
   print('saving..')
-  print(instance.created_at)
-  print(instance)
+  print("created at", instance.created_at)
+  print("instance", instance)
   # Genre.objects.create(tvshow = instance)
   if not instance.slug:
     instance.slug = unique_slug_generator(instance)
 
-# def tvshow_post_save_receiver(sender, instance, created, *args, **kwargs):
-#   print('saved')
-#   print(instance.created_at)
-#   if not instance.slug:
-#     instance.slug = unique_slug_generator(instance)
-#     instance.save()
+def tvshow_post_save_receiver(sender, instance, created, *args, **kwargs):
+  print('saved')
+  print('instance pot saved', instance)
+  print(instance.created_at)
+  # if not instance.slug:
+    # instance.slug = unique_slug_generator(instance)
+    # instance.save()
 
 
 pre_save.connect(tvshow_pre_save_receiver, sender=TVShow)

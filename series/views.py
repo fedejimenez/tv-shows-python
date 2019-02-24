@@ -27,6 +27,9 @@ class SeriesCreateView(LoginRequiredMixin, CreateView):
   template_name = 'form.html'
 
   def form_valid(self, form):
+    print("self", self)
+    print("self request", self.request)
+    print("form", form)
     instance = form.save(commit=False)
     instance.user = self.request.user
     return super(SeriesCreateView, self).form_valid(form)

@@ -25,7 +25,7 @@ class DictionaryForm(forms.Form):
 
         url = endpoint.format(source_lang='en', name_id=name)
         response = requests.get(url)
-        print(response)
+        print("response", response)
         if response.status_code == 200:  # SUCCESS
             result = response.json()
             result['success'] = True
