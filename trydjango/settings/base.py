@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y)uai!&9^r9vp=*9zkc!_zgs8+wax=$@$55!=02w6x1@d=8y6v'
+
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    # 'debug_toolbar',
 
     'series',
     'profiles',
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -152,13 +153,13 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_in_env")
 #     'debug_toolbar.panels.redirects.RedirectsPanel',
 # ]
 
-def show_toolbar(request):
-  return True
+# def show_toolbar(request):
+#   return True
 
-DEBUG_TOOLBAR_CONFIG = {
-  'INTERCEPT_REDIRECT': False, 
-  'SHOW_TOOLBAR_CALLBACK': show_toolbar
-}
+# DEBUG_TOOLBAR_CONFIG = {
+#   'INTERCEPT_REDIRECT': False, 
+#   'SHOW_TOOLBAR_CALLBACK': show_toolbar
+# }
 
 
 LOGGING = {
