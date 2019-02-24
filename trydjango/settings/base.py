@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 'debug_toolbar',
 
     'series',
+    'series.TVShow',
     'profiles',
     'django_extensions',
 ]

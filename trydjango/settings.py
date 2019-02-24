@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'debug_toolbar',
     'series',
+    'series.TVShow',
     'profiles',
     'django_extensions',
 ]
