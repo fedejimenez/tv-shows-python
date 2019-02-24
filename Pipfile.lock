@@ -164,13 +164,6 @@
             "index": "pypi",
             "version": "==2.0.2"
         },
-        "pygraphviz": {
-            "hashes": [
-                "sha256:50a829a305dc5a0fd1f9590748b19fece756093b581ac91e00c2c27c651d319d"
-            ],
-            "index": "pypi",
-            "version": "==1.5"
-        },
         "pyparsing": {
             "hashes": [
                 "sha256:66c9268862641abcac4a96ba74506e594c884e3f57690a696d21ad8210ed667a",

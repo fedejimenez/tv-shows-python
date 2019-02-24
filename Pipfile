@@ -16,7 +16,6 @@ django-debug-toolbar = "*"
 requests = "*"
 python-decouple = "*"
 django-extensions = "*"
-pygraphviz = "*"
 pydotplus = "*"
 whitenoise = "==3.2.1"
 
