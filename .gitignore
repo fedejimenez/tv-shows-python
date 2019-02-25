@@ -10,6 +10,9 @@ include/
 static_in_env/
 pip-selfcheck.json
 
+# localconfig
+local.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
