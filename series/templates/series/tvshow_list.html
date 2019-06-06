@@ -1,20 +1,16 @@
-{% extends "base.html" %}
-
-{% block head_title %} Series | {{ block.super }} {% endblock head_title %}
-
-{% block content %}
+{% extends "base.html" %} {% block head_title %} Series | {{ block.super }} {% endblock head_title %} {% block content %}
 
 <h1>Series List <small><a href="{% url 'series:create' %}">Add a Series</a></small></h1>
 
 <div class="row">
-{% for object in object_list %}
+    {% for object in object_list %}
 
-  <div class='col-sm-4 mb-2'>
-    <div class='card card-cascade'>
-       <div class='view overlay'>
-         <a href='http://tvshowspython.herokuapp.com/?name={{ object.name}}'>
+    <div class='col-sm-4 mb-2'>
+        <div class='card card-cascade'>
+            <div class='view overlay'>
+                <a href='https://tvshowspython.herokuapp.com/?name={{ object.name}}'>
           {% if object.image is None %}
-            <img class="card-img-top img-fluid" src="http://placehold.jp/24/cccccc/ffffff/150x150.png?text=No%20image%20avaiable" alt="show image">
+            <img class="card-img-top img-fluid" src="https://placehold.jp/24/cccccc/ffffff/150x150.png?text=No%20image%20avaiable" alt="show image">
           {% else %}  
             <img class="card-img-top img-fluid" src="{{ object.image }}" alt="Sample image">
           {% endif %}  
@@ -22,34 +18,32 @@
              <h1 class='white-text text-justify'><strong>{{ object.rating }} / 10 </strong></h1>
            </div>
          </a>
-       </div>
-       <a href='http://tvshowspython.herokuapp.com/?name={{ object.name }}'>
-          <div class='card-body card-body-cascade'>
-            <h3 class='card-title text-center black-text'>
-              <strong> {{ object.name }} 
+            </div>
+            <a href='https://tvshowspython.herokuapp.com/?name={{ object.name }}'>
+                <div class='card-body card-body-cascade'>
+                    <h3 class='card-title text-center black-text'>
+                        <strong> {{ object.name }} 
               </strong>
-            </h3>
-            <p class='card-text text-center'>
-              <span class='mr-3'><i class='fas fa-hourglass pr-1'></i>
+                    </h3>
+                    <p class='card-text text-center'>
+                        <span class='mr-3'><i class='fas fa-hourglass pr-1'></i>
                 <strong>
                   {{ object.status }} 
                 </strong>
               <span>
                 {% if object.genre_set %}
                   {% for genre in object.genre_set.all %}
-                <span class='badge badge-primary ml-2'>{{ genre }}</span>
-                  {% endfor %}
-                {% endif %}
-            </p>
-          </div>
-       </a>
+                <span class='badge badge-primary ml-2'>{{ genre }}</span> {% endfor %} {% endif %}
+                    </p>
+                </div>
+            </a>
+        </div>
     </div>
-  </div>
 
-{% empty %}
-  <li><a href="{% url 'series:create' %}">Add a Series</a></li>
+    {% empty %}
+    <li><a href="{% url 'series:create' %}">Add a Series</a></li>
 
-{% endfor %}
+    {% endfor %}
 </div>
 
 

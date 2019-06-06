@@ -18,10 +18,10 @@ class DictionaryForm(forms.Form):
         result = {}
         if type(self) is str:
           name = random.randint(1,41014)
-          endpoint = 'http://api.tvmaze.com/shows/{name_id}'
+          endpoint = 'https://api.tvmaze.com/shows/{name_id}'
         else:
           name = self.cleaned_data['name']
-          endpoint = 'http://api.tvmaze.com/singlesearch/shows?q={name_id}'
+          endpoint = 'https://api.tvmaze.com/singlesearch/shows?q={name_id}'
 
         url = endpoint.format(source_lang='en', name_id=name)
         response = requests.get(url)
